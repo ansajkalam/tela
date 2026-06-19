@@ -16,4 +16,4 @@ This folder is deployable as-is on Vercel.
 - `styles.css` - visual design and responsive behavior
 - `app.js` - rendering, shuffle, hover/tap context, and PNG export
 - `approved-alphabet-images.json` - approved image metadata and crop settings
-- `images/` - local image assets used for rendering and export
+- `tiles/` - optimized local portrait image assets used for rendering and export

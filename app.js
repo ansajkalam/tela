@@ -21,7 +21,8 @@ async function bootstrap() {
   shuffleButton.addEventListener("click", shuffleVariation);
   saveButton.addEventListener("click", saveDesign);
   document.addEventListener("click", closeActiveTile);
-  nameInput.value = "ASJID";
+  preloadAlphabetImages();
+  nameInput.value = "tela";
   renderName();
 }
 
@@ -33,6 +34,13 @@ function groupByLetter(images) {
     grouped[letter].push(image);
     return grouped;
   }, {});
+}
+
+function preloadAlphabetImages() {
+  Object.values(alphabet).flat().forEach((item) => {
+    const image = new Image();
+    image.src = item.imageUrl;
+  });
 }
 
 function renderName() {
