@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Real Image Alphabet</title>
+    <link rel="stylesheet" href="styles.css?v=mobile-context-2">
+  </head>
+  <body>
+    <main class="app">
+      <section class="name-stage" aria-label="Name preview">
+        <div id="tileRow" class="tile-row" aria-live="polite"></div>
+        <div id="mobileContext" class="mobile-context" hidden></div>
+      </section>
+
+      <section class="input-panel" aria-label="Name input">
+        <label for="nameInput">Enter a name</label>
+        <div class="input-row">
+          <input id="nameInput" type="text" autocomplete="off" spellcheck="false" maxlength="28" autofocus>
+          <button id="shuffleButton" class="icon-button" type="button" title="Reload variation" aria-label="Reload variation">Reload</button>
+        </div>
+        <button id="saveButton" class="save-button" type="button">Save Design</button>
+      </section>
+    </main>
+
+    <script src="app.js?v=mobile-context-2"></script>
+  </body>
+</html>
