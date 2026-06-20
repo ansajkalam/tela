@@ -158,7 +158,7 @@ function parseLines(value) {
     .toUpperCase()
     .split(/\s+/)
     .filter(Boolean)
-    .map((line) => line.replace(/[^A-Z]/g, "").split("").filter(Boolean));
+    .map((line) => line.replace(/[^A-Z0-9._]/g, "").split("").filter(Boolean));
 }
 
 function chooseImage(letter, index, lineIndex, usedByLetter = {}) {
@@ -300,3 +300,4 @@ function drawFallbackTile(ctx, box) {
   ctx.textBaseline = "middle";
   ctx.fillText(box.letter, box.x + box.width / 2, box.y + box.height / 2);
 }
+

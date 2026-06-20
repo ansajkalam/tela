@@ -13,18 +13,19 @@ TARGET_H = 900
 PngImagePlugin.MAX_TEXT_CHUNK = 128 * 1024 * 1024
 
 
+def open_image(source_ref):
+    return Image.open(ROOT / source_ref)
+
+
 def source_box(width, height, crop):
     zoom = float(crop.get("zoom", 1) or 1)
     pan_x = float(crop.get("panX", 50)) / 100
     pan_y = float(crop.get("panY", 50)) / 100
-
     src_w = width / zoom
     src_h = src_w * (TARGET_H / TARGET_W)
-
     if src_h > height:
         src_h = height / zoom
         src_w = src_h * (TARGET_W / TARGET_H)
-
     max_x = max(width - src_w, 0)
     max_y = max(height - src_h, 0)
     left = max_x * pan_x
@@ -43,23 +44,24 @@ with DATASET.open("r", encoding="utf-8") as handle:
     data = json.load(handle)
 
 for index, item in enumerate(data, start=1):
-    source_ref = item.get("fullImageUrl") or item["imageUrl"]
-    if not source_ref.startswith(("images/", "tiles/")):
-        source_ref = item["imageUrl"]
-    source = ROOT / source_ref
+    source_ref = item.get("fullImageUrl") or item.get("originalImageUrl") or item["imageUrl"]
+    if source_ref.startswith("tiles/") and item.get("fullImageUrl"):
+        source_ref = item["fullImageUrl"]
     title = item.get("title") or item.get("description") or "image"
-    name = f"{index:03d}-{item['letter']}-{slug(title)}.jpg"
+    letter_slug = "underscore" if item["letter"] == "_" else "dot" if item["letter"] == "." else item["letter"]
+    name = f"{index:03d}-{letter_slug}-{slug(title)}.jpg"
     output = OUT_DIR / name
-
-    with Image.open(source) as img:
+    with open_image(source_ref) as img:
         img = ImageOps.exif_transpose(img).convert("RGB")
+        if item.get("letter") == "_":
+            img = img.rotate(90, expand=True)
+            item["transformHint"] = {"sourceLetter": "1", "useAs": "_", "rotateDegrees": 90}
         box = source_box(img.width, img.height, item.get("crop") or {})
         cropped = img.crop(box)
         cropped = ImageOps.fit(cropped, (TARGET_W, TARGET_H), method=Image.Resampling.LANCZOS)
         cropped.save(output, "JPEG", quality=82, optimize=True, progressive=True)
-
-    item["originalImageUrl"] = item.get("originalImageUrl") or item["imageUrl"]
-    item["fullImageUrl"] = item["imageUrl"]
+    item["originalImageUrl"] = item.get("originalImageUrl") or source_ref
+    item["fullImageUrl"] = source_ref
     item["imageUrl"] = f"tiles/{name}"
     item["thumbnailUrl"] = f"tiles/{name}"
     item["optimizedTile"] = True
