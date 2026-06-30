@@ -1,0 +1,15 @@
+{
+  "name": "tela",
+  "version": "1.0.0",
+  "description": "Real Image Alphabet - Create names with real images",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["alphabet", "images", "design"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
