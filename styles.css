@@ -242,23 +242,26 @@ body {
   color: #fff;
 }
 
-.coffee-button {
-  display: inline-flex;
-  justify-self: center;
-  margin-top: 2px;
-  border-radius: 8px;
-  transition: transform 160ms ease;
+.connect-line {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
 }
 
-.coffee-button img {
-  display: block;
-  width: 156px;
-  height: 43px;
+.connect-line a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.connect-line a:hover {
+  text-decoration: underline;
 }
 
 .icon-button:hover,
-.save-button:hover,
-.coffee-button:hover {
+.save-button:hover {
   transform: translateY(-1px);
 }
 
