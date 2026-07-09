@@ -242,8 +242,23 @@ body {
   color: #fff;
 }
 
+.coffee-button {
+  display: inline-flex;
+  justify-self: center;
+  margin-top: 2px;
+  border-radius: 8px;
+  transition: transform 160ms ease;
+}
+
+.coffee-button img {
+  display: block;
+  width: 217px;
+  height: 60px;
+}
+
 .icon-button:hover,
-.save-button:hover {
+.save-button:hover,
+.coffee-button:hover {
   transform: translateY(-1px);
 }
 
